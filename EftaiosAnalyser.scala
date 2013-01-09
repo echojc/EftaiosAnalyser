@@ -16,14 +16,20 @@ object Basic extends World {
 
 object EftaiosAnalyser extends App {
   def analyse(world: World, moves: List[(Hex, Point)]): List[(Point, Double)] = {
-    def iter(locs: List[Point], moves: List[(Hex, Point)]): List[Point] = {
-      if (moves.isEmpty) locs
-      else iter(locs.flatMap(h => world.neighbours(h) filter { p => world.map(p) == moves.head._1 }), moves.tail)
+    def iter(possibleLocations: List[Point], moves: List[(Hex, Point)]): List[Point] = {
+      if (moves.isEmpty) possibleLocations
+      else {
+
+        iter(possibleLocations.flatMap(h => world.neighbours(h) filter { p => world.map(p) == moves.head._1 }), moves.tail)
+      }
     }
-    val locs = List((world.map find { _._2 == HumanSpawn }).get._1)
-    val points = iter(locs, moves)
+
+    val initialLocation = (world.map find { _._2 == HumanSpawn }).get._1
+    val results = iter(List(initialLocation), moves)
+
+    // find number of each id and use that as probability
     val size: Double = points.size
-    (points.distinct map { h => (h, (points count { _ == h }) / size) } sortBy { _._2 }).reverse
+    (results.distinct map { h => (h, (results count { _ == h }) / size) } sortBy { _._2 }).reverse
   }
 
   println(analyse(Basic, List((Light, null), (Light, null), (Light, null), (Light, null))))

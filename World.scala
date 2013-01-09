@@ -25,10 +25,10 @@ trait World {
   lazy val height = world.size
 
   lazy val map: Map[Point, Hex] = {
-    (for (
-      y <- 0 until height;
+    (for {
+      y <- 0 until height
       x <- 0 until width
-    ) yield Point(x + origin.x, y + origin.y) -> (world(y)(x) match {
+    } yield Point(x + origin.x, y + origin.y) -> (world(y)(x) match {
       case 'O' => Light
       case '#' => Dark
       case 'A' => AlienSpawn
