@@ -84,20 +84,3 @@ trait World {
     }
   }
 }
-
-object Fermi extends World {
-  val origin: Point = "H01"
-  val mapStr = """--3---4--
-                 |---O-#---
-                 |--#O#O#--
-                 |--O###O--
-                 |--1-O-2--
-                 |-O--O--O-
-                 |-#O-O-#O-
-                 |--OOOOO--
-                 |-#--A--O-
-                 |OOO-H-O#O
-                 |O-OOOOO-#
-                 |-#O-O-#O-
-                 |---#-O---"""
-}
